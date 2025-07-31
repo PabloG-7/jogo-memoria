@@ -5,7 +5,7 @@ Um jogo de memória moderno e viciante e múltiplos modos de jogo.
 ## ✨ Funcionalidades
 
 ### 🎯 Modos de Jogo
-- **Clássico**: Jogo tradicional de memória
+- **Clássico**: 3 Modos de jogo (Normal, Velocidade, Difícil)
 - **Multiplayer**: Jogue online contra outros jogadores em tempo real
 
 ### 🎨 Visual e Design
