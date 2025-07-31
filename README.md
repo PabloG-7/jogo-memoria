@@ -1,6 +1,6 @@
 # 🎮 NEON MEMORY
 
-Um jogo de memória moderno e viciante com visual cyberpunk e múltiplos modos de jogo.
+Um jogo de memória moderno e viciante e múltiplos modos de jogo.
 
 ![Neon Memory](https://img.shields.io/badge/Status-Ativo-brightgreen)
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
