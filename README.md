@@ -32,7 +32,7 @@ Um jogo de memória moderno e viciante e múltiplos modos de jogo.
 - **ESC**: Pausar o jogo
 - **Space**: Pausar/Retomar
 
-### Quer Testar na Prática? Jogue Agora! 
+## 🕹 Quer Testar na Prática? Jogue Agora! 
 - [https://jogo-memoria-gold.vercel.app/]
 
 ## 🛠️ Tecnologias Utilizadas
