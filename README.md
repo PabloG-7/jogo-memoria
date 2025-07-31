@@ -87,22 +87,6 @@ cp .env.example .env.local
 npm run dev
 ```
 
-## 📁 Estrutura do Projeto
-
-```
-src/
-├── components/          # Componentes React
-│   ├── game/           # Componentes do jogo principal
-│   ├── multiplayer/    # Componentes do multiplayer
-│   ├── ui/            # Componentes da interface
-│   └── credits/       # Tela de créditos
-├── hooks/             # Hooks customizados
-├── types/             # Definições TypeScript
-├── utils/             # Funções utilitárias
-├── constants/         # Constantes do jogo
-└── integrations/      # Integrações (Supabase)
-```
-
 ## 🎯 Roadmap
 
 - [ ] Sistema de pontuação global
