@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Play, Settings, HelpCircle, Award, Volume2, Users } from 'lucide-react';
 
@@ -22,113 +21,178 @@ const GameMenu: React.FC<GameMenuProps> = ({
   soundEnabled
 }) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 animate-fade-in relative overflow-hidden">
-      {/* Background Decorative Balls */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Large floating balls */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-neon-blue/10 to-neon-purple/10 rounded-full blur-xl animate-pulse" />
-        <div className="absolute top-1/3 right-16 w-24 h-24 bg-gradient-to-r from-neon-pink/15 to-neon-green/15 rounded-full blur-lg animate-pulse delay-1000" />
-        <div className="absolute bottom-32 left-1/4 w-20 h-20 bg-gradient-to-r from-neon-purple/20 to-neon-blue/20 rounded-full blur-md animate-pulse delay-2000" />
-        <div className="absolute top-1/2 left-8 w-16 h-16 bg-gradient-to-r from-neon-green/10 to-neon-pink/10 rounded-full blur-sm animate-pulse delay-3000" />
-        <div className="absolute bottom-20 right-20 w-28 h-28 bg-gradient-to-r from-neon-orange/10 to-neon-purple/10 rounded-full blur-lg animate-pulse delay-1500" />
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 animate-fade-in relative overflow-hidden bg-gray-900">
+      {/* Enhanced Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 z-0">
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'linear-gradient(to right, #7c3aed 1px, transparent 1px), linear-gradient(to bottom, #7c3aed 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+          animation: 'gridMove 20s linear infinite'
+        }}></div>
         
-        {/* Medium balls */}
-        <div className="absolute top-40 right-1/3 w-12 h-12 bg-neon-blue/5 rounded-full blur-sm animate-pulse delay-500" />
-        <div className="absolute bottom-40 left-1/3 w-14 h-14 bg-neon-purple/8 rounded-full blur-md animate-pulse delay-2500" />
-        <div className="absolute top-60 left-1/2 w-10 h-10 bg-neon-pink/6 rounded-full blur-sm animate-pulse delay-4000" />
+        {/* Floating Neon Circles */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-purple-600/10 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-600/10 blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-1/3 right-1/3 w-48 h-48 rounded-full bg-pink-600/10 blur-2xl animate-pulse delay-2000"></div>
         
-        {/* Small floating dots */}
-        <div className="absolute top-1/4 right-1/4 w-6 h-6 bg-neon-green/15 rounded-full animate-pulse delay-1000" />
-        <div className="absolute bottom-1/4 left-1/3 w-4 h-4 bg-neon-blue/20 rounded-full animate-pulse delay-3500" />
-        <div className="absolute top-3/4 right-1/3 w-8 h-8 bg-neon-pink/10 rounded-full animate-pulse delay-2000" />
-        <div className="absolute top-1/2 right-10 w-5 h-5 bg-neon-purple/15 rounded-full animate-pulse delay-4500" />
-        <div className="absolute bottom-1/3 left-20 w-7 h-7 bg-neon-orange/12 rounded-full animate-pulse delay-1800" />
+        {/* Subtle Moving Lines */}
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-moveLine"></div>
+        <div className="absolute bottom-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-blue-500/30 to-transparent animate-moveLine delay-2000"></div>
       </div>
 
-      {/* Title */}
-      <div className="text-center mb-12 animate-bounce-in relative z-10">
-        <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-bold text-neon-glow mb-4">
-          <span className="bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink bg-clip-text text-transparent">
+      {/* Title - Enhanced Size */}
+      <div className="text-center mb-8 md:mb-12 animate-bounce-in relative z-10">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3 md:mb-4">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
             NEON MEMORY
           </span>
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-300 animate-pulse">
+        <p className="text-sm sm:text-base md:text-lg text-gray-300 font-light tracking-wider animate-pulse">
           Teste sua memória no futuro!
         </p>
       </div>
 
       {/* High Score */}
       {highScore > 0 && (
-        <div className="mb-8 animate-slide-up relative z-10">
-          <div className="flex items-center justify-center space-x-2 bg-gradient-to-r from-neon-purple/20 to-neon-pink/20 rounded-lg px-6 py-3 border border-neon-purple/30">
-            <Award className="w-5 h-5 text-neon-purple" />
-            <span className="text-white font-semibold">
-              Recorde: {highScore}
+        <div className="mb-6 md:mb-8 animate-slide-up relative z-10">
+          <div className="flex items-center justify-center space-x-2 bg-gray-800/80 backdrop-blur-sm rounded-full px-6 py-2 md:px-8 md:py-3 border border-purple-500/30 shadow-lg shadow-purple-500/10">
+            <Award className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+            <span className="text-sm md:text-base text-white font-medium tracking-wider">
+              Recorde: <span className="text-purple-300 font-bold">{highScore}</span>
             </span>
           </div>
         </div>
       )}
 
       {/* Menu Buttons */}
-      <div className="space-y-4 w-full max-w-sm animate-slide-up relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full max-w-2xl px-4 animate-slide-up relative z-10">
+        {/* Play Button */}
         <button
           onClick={onStartGame}
-          className="neon-button w-full flex items-center justify-center space-x-3 text-lg"
-        >
-          <Play className="w-6 h-6" />
-          <span>JOGAR</span>
-        </button>
-
-        <button
-          onClick={onShowMultiplayer}
-          className="w-full flex items-center justify-center space-x-3 text-lg py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 bg-gradient-to-r from-orange-500 to-red-500 hover:scale-105"
+          className="group col-span-1 sm:col-span-2 flex items-center justify-center space-x-2 text-base md:text-lg py-3 md:py-4 px-6 rounded-lg md:rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden"
           style={{
-            background: 'linear-gradient(45deg, #FF8C00, #FF4500)',
-            boxShadow: '0 0 20px rgba(255, 140, 0, 0.3)'
+            background: 'linear-gradient(45deg, rgba(99, 102, 241, 0.9), rgba(168, 85, 247, 0.9))',
+            boxShadow: '0 4px 20px rgba(139, 92, 246, 0.4)'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 30px rgba(255, 140, 0, 0.5), 0 0 40px rgba(255, 69, 0, 0.3)';
+            e.currentTarget.style.boxShadow = '0 4px 30px rgba(139, 92, 246, 0.6)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 140, 0, 0.3)';
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(139, 92, 246, 0.4)';
+            e.currentTarget.style.transform = 'translateY(0)';
           }}
         >
-          <Users className="w-6 h-6" />
-          <span>MULTIPLAYER</span>
+          <Play className="w-5 h-5 md:w-6 md:h-6 z-10" />
+          <span className="z-10 tracking-wider">JOGAR</span>
         </button>
 
+        {/* Multiplayer Button */}
         <button
-          onClick={onShowSettings}
-          className="w-full flex items-center justify-center space-x-3 text-lg py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 hover:scale-105"
+          onClick={onShowMultiplayer}
+          className="group flex items-center justify-center space-x-2 text-base md:text-lg py-3 md:py-4 px-6 rounded-lg md:rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(45deg, rgba(245, 158, 11, 0.9), rgba(239, 68, 68, 0.9))',
+            boxShadow: '0 4px 20px rgba(239, 68, 68, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 30px rgba(239, 68, 68, 0.5)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(239, 68, 68, 0.3)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
         >
-          <Settings className="w-6 h-6" />
-          <span>CONFIGURAÇÕES</span>
+          <Users className="w-5 h-5 md:w-6 md:h-6 z-10" />
+          <span className="z-10 tracking-wider">MULTIPLAYER</span>
         </button>
 
+        {/* Instructions Button */}
         <button
           onClick={onShowInstructions}
-          className="w-full flex items-center justify-center space-x-3 text-lg py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 bg-gradient-to-r from-neon-blue/20 to-neon-green/20 border border-neon-blue/30 hover:border-neon-blue/50 hover:scale-105"
+          className="group flex items-center justify-center space-x-2 text-base md:text-lg py-3 md:py-4 px-6 rounded-lg md:rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.9), rgba(16, 185, 129, 0.9))',
+            boxShadow: '0 4px 20px rgba(59, 130, 246, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 30px rgba(59, 130, 246, 0.4)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.3)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
         >
-          <HelpCircle className="w-6 h-6" />
-          <span>COMO JOGAR</span>
+          <HelpCircle className="w-5 h-5 md:w-6 md:h-6 z-10" />
+          <span className="z-10 tracking-wider">COMO JOGAR</span>
         </button>
 
+        {/* Settings Button */}
+        <button
+          onClick={onShowSettings}
+          className="group flex items-center justify-center space-x-2 text-base md:text-lg py-3 md:py-4 px-6 rounded-lg md:rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden bg-gray-800/90 backdrop-blur-sm border border-gray-700 hover:border-gray-600"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
+          <Settings className="w-5 h-5 md:w-6 md:h-6 z-10 text-gray-300" />
+          <span className="z-10 tracking-wider text-gray-200">CONFIGURAÇÕES</span>
+        </button>
+
+        {/* Credits Button */}
         <button
           onClick={onShowCredits}
-          className="w-full flex items-center justify-center space-x-3 text-lg py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 bg-gradient-to-r from-neon-orange/20 to-neon-pink/20 border border-neon-orange/30 hover:border-neon-orange/50 hover:scale-105"
+          className="group flex items-center justify-center space-x-2 text-base md:text-lg py-3 md:py-4 px-6 rounded-lg md:rounded-xl font-semibold text-white transition-all duration-300 relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(45deg, rgba(236, 72, 153, 0.9), rgba(244, 114, 182, 0.9))',
+            boxShadow: '0 4px 20px rgba(236, 72, 153, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 30px rgba(236, 72, 153, 0.4)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(236, 72, 153, 0.3)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
         >
-          <Award className="w-6 h-6" />
-          <span>CRÉDITOS</span>
+          <Award className="w-5 h-5 md:w-6 md:h-6 z-10" />
+          <span className="z-10 tracking-wider">CRÉDITOS</span>
         </button>
       </div>
 
       {/* Sound indicator */}
-      <div className="mt-8 flex items-center space-x-2 text-gray-400 relative z-10">
-        <Volume2 className={`w-4 h-4 ${soundEnabled ? 'text-neon-green' : 'text-gray-500'}`} />
-        <span className="text-sm">
+      <div className="mt-6 md:mt-8 flex items-center space-x-2 relative z-10">
+        <div className={`p-2 rounded-full ${soundEnabled ? 'bg-green-500/20' : 'bg-gray-700'} backdrop-blur-sm border ${soundEnabled ? 'border-green-500/30' : 'border-gray-600'}`}>
+          <Volume2 className={`w-4 h-4 ${soundEnabled ? 'text-green-400' : 'text-gray-400'}`} />
+        </div>
+        <span className="text-xs md:text-sm text-gray-300 tracking-wider">
           Som {soundEnabled ? 'ligado' : 'desligado'}
         </span>
       </div>
+
+      {/* Corrected Animation styles */}
+      <style>{`
+        @keyframes float {
+          0% { transform: translateY(0) translateX(0); }
+          50% { transform: translateY(-10px) translateX(5px); }
+          100% { transform: translateY(0) translateX(0); }
+        }
+        @keyframes gridMove {
+          0% { background-position: 0 0; }
+          100% { background-position: 40px 40px; }
+        }
+        @keyframes moveLine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </div>
   );
 };

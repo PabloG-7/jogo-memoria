@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Plus, Play, ArrowLeft } from 'lucide-react';
+import { Play, Plus, ArrowLeft, Users } from 'lucide-react';
 
 interface MultiplayerEntryProps {
   onCreateRoom: (playerName: string) => void;
@@ -32,34 +29,67 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gray-900">
+      {/* Enhanced Background - Same as main menu */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 z-0">
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'linear-gradient(to right, #7c3aed 1px, transparent 1px), linear-gradient(to bottom, #7c3aed 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+          animation: 'gridMove 20s linear infinite'
+        }}></div>
+        
+        {/* Floating Neon Circles */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-purple-600/10 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-600/10 blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-1/3 right-1/3 w-48 h-48 rounded-full bg-pink-600/10 blur-2xl animate-pulse delay-2000"></div>
+        
+        {/* Subtle Moving Lines */}
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-moveLine"></div>
+        <div className="absolute bottom-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-blue-500/30 to-transparent animate-moveLine delay-2000"></div>
+      </div>
+
+      {/* Back Button */}
+      <button
+        onClick={onBack}
+        className="absolute top-4 left-4 md:top-6 md:left-6 flex items-center space-x-1 text-sm text-gray-300 hover:text-white transition-colors z-10"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span>Voltar</span>
+      </button>
+
+      {/* Main Content */}
+      <div className="w-full max-w-md space-y-6 relative z-10 animate-fade-in">
+        {/* Title */}
         <div className="text-center space-y-2">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <Users className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Users className="w-8 h-8 text-purple-400" />
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
               Modo Multiplayer
             </h1>
           </div>
-          <p className="text-muted-foreground text-sm sm:text-base">
+          <p className="text-gray-300 text-sm sm:text-base tracking-wider">
             Jogue Neon Memory com seus amigos online!
           </p>
         </div>
 
-        <Card className="border-primary/20 bg-card/80 backdrop-blur-sm">
-          <CardHeader className="text-center">
-            <CardTitle className="text-xl text-foreground">Digite seu nome</CardTitle>
-            <CardDescription>
+        {/* Card */}
+        <div className="bg-gray-800/80 backdrop-blur-sm rounded-xl border border-purple-500/30 p-6 shadow-lg shadow-purple-500/10">
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-semibold text-white mb-1">Digite seu nome</h2>
+            <p className="text-sm text-gray-400">
               Como você gostaria de ser chamado no jogo?
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
           
-          <CardContent className="space-y-4">
-            <Input
+          {/* Input */}
+          <div className="mb-6">
+            <input
+              type="text"
               placeholder="Seu nome de jogador"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
-              className="text-center text-lg"
+              className="w-full px-4 py-3 bg-gray-700/80 border border-gray-600/50 rounded-lg text-white placeholder-gray-400 text-center focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all"
               maxLength={20}
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && playerName.trim()) {
@@ -67,47 +97,57 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
                 }
               }}
             />
+          </div>
 
-            <div className="space-y-3">
-              <Button
-                onClick={handleCreateRoom}
-                disabled={!playerName.trim() || loading}
-                className="w-full text-lg py-6 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
-                size="lg"
-              >
-                <Plus className="w-5 h-5 mr-2" />
-                Criar Nova Sala
-              </Button>
-
-              <Button
-                onClick={handleJoinRoom}
-                disabled={!playerName.trim() || loading}
-                variant="outline"
-                className="w-full text-lg py-6 border-primary/30 hover:bg-primary/10 transition-all duration-300"
-                size="lg"
-              >
-                <Play className="w-5 h-5 mr-2" />
-                Entrar em Sala
-              </Button>
-            </div>
-
-            <Button
-              onClick={onBack}
-              variant="ghost"
-              className="w-full mt-6 text-muted-foreground hover:text-foreground transition-colors"
+          {/* Buttons */}
+          <div className="space-y-4">
+            <button
+              onClick={handleCreateRoom}
+              disabled={!playerName.trim() || loading}
+              className={`w-full flex items-center justify-center space-x-2 py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 ${
+                !playerName.trim() || loading 
+                  ? 'bg-gray-700 cursor-not-allowed' 
+                  : 'bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-600/90 hover:to-blue-500/90'
+              }`}
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Voltar ao Menu
-            </Button>
-          </CardContent>
-        </Card>
+              <Plus className="w-5 h-5" />
+              <span>Criar Nova Sala</span>
+            </button>
 
+            <button
+              onClick={handleJoinRoom}
+              disabled={!playerName.trim() || loading}
+              className={`w-full flex items-center justify-center space-x-2 py-3 px-6 rounded-lg font-semibold text-white transition-all duration-300 ${
+                !playerName.trim() || loading 
+                  ? 'bg-gray-700 cursor-not-allowed border-gray-600' 
+                  : 'bg-gradient-to-r from-blue-500 to-cyan-400 hover:from-blue-500/90 hover:to-cyan-400/90 border border-blue-400/30'
+              }`}
+            >
+              <Play className="w-5 h-5" />
+              <span>Entrar em Sala</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Footer Note */}
         <div className="text-center">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-gray-500 tracking-wider">
             🎮 Desafie seus amigos em tempo real!
           </p>
         </div>
       </div>
+
+      {/* Animation styles */}
+      <style>{`
+        @keyframes gridMove {
+          0% { background-position: 0 0; }
+          100% { background-position: 40px 40px; }
+        }
+        @keyframes moveLine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </div>
   );
 };

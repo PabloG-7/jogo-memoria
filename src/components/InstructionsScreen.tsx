@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowLeft, Eye, MousePointer, Brain, Zap, Skull } from 'lucide-react';
 
@@ -8,43 +7,66 @@ interface InstructionsScreenProps {
 
 const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20 p-4 sm:p-6 lg:p-8 animate-fade-in">
-      {/* Header */}
-      <div className="flex items-center mb-6 sm:mb-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 animate-fade-in relative overflow-hidden bg-gray-900">
+      {/* Enhanced Background (same as menu) */}
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 z-0">
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10" style={{
+          backgroundImage: 'linear-gradient(to right, #7c3aed 1px, transparent 1px), linear-gradient(to bottom, #7c3aed 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+          animation: 'gridMove 20s linear infinite'
+        }}></div>
+        
+        {/* Floating Neon Circles */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-purple-600/10 blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-600/10 blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-1/3 right-1/3 w-48 h-48 rounded-full bg-pink-600/10 blur-2xl animate-pulse delay-2000"></div>
+        
+        {/* Subtle Moving Lines */}
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-moveLine"></div>
+        <div className="absolute bottom-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-blue-500/30 to-transparent animate-moveLine delay-2000"></div>
+      </div>
+
+      {/* Header with Back Button */}
+      <div className="w-full max-w-6xl flex items-center mb-4 md:mb-8 relative z-10">
         <button
           onClick={onBack}
-          className="flex items-center space-x-2 text-gray-300 hover:text-white transition-all duration-300 hover:scale-105 group"
+          className="group flex items-center space-x-2 text-gray-300 hover:text-white transition-all duration-300 text-sm sm:text-base"
         >
-          <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-          <span className="text-sm sm:text-base font-medium">Voltar</span>
+          <div className="p-2 rounded-full bg-gray-800/80 backdrop-blur-sm border border-gray-700 group-hover:border-purple-500/50 transition-colors">
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
+          </div>
+          <span className="hidden sm:inline">Voltar</span>
         </button>
       </div>
 
-      {/* Title */}
-      <div className="text-center mb-8 sm:mb-12">
-        <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple mb-6 animate-pulse-neon">
+      {/* Title Section */}
+      <div className="text-center mb-8 md:mb-12 relative z-10">
+        <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 mb-6 animate-pulse">
           <Brain className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
         </div>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 text-neon-glow">
-          Como Jogar
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 md:mb-4">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+            COMO JOGAR
+          </span>
         </h1>
-        <p className="text-gray-300 text-base sm:text-lg max-w-md mx-auto">
+        <p className="text-sm sm:text-base md:text-lg text-gray-300 font-light tracking-wider animate-pulse">
           Aprenda as regras do Neon Memory e domine o jogo!
         </p>
       </div>
 
       {/* Instructions */}
-      <div className="space-y-6 sm:space-y-8 max-w-4xl mx-auto">
+      <div className="space-y-6 w-full max-w-4xl relative z-10">
         {/* Step 1 */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-neon-blue/20 p-6 sm:p-8 hover:border-neon-blue/40 transition-all duration-500 hover:scale-[1.02] animate-slide-up">
-          <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-blue-400/20 p-6 hover:border-blue-400/50 transition-all duration-500 hover:scale-[1.02]">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div className="relative flex items-start space-x-4 sm:space-x-6">
-            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-neon-blue to-neon-purple flex items-center justify-center animate-glow">
+            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center">
               <Eye className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
             <div className="flex-1">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 flex items-center">
-                <span className="bg-gradient-to-r from-neon-blue to-neon-purple bg-clip-text text-transparent mr-3">1.</span>
+                <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mr-3">1.</span>
                 Observe a Sequência
               </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
@@ -56,15 +78,15 @@ const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
         </div>
 
         {/* Step 2 */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-neon-purple/20 p-6 sm:p-8 hover:border-neon-purple/40 transition-all duration-500 hover:scale-[1.02] animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <div className="absolute inset-0 bg-gradient-to-r from-neon-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-purple-500/20 p-6 hover:border-purple-500/50 transition-all duration-500 hover:scale-[1.02]">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div className="relative flex items-start space-x-4 sm:space-x-6">
-            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-neon-purple to-neon-pink flex items-center justify-center animate-glow">
+            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
               <MousePointer className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
             <div className="flex-1">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 flex items-center">
-                <span className="bg-gradient-to-r from-neon-purple to-neon-pink bg-clip-text text-transparent mr-3">2.</span>
+                <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent mr-3">2.</span>
                 Repita a Sequência
               </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
@@ -76,15 +98,15 @@ const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
         </div>
 
         {/* Step 3 */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-neon-pink/20 p-6 sm:p-8 hover:border-neon-pink/40 transition-all duration-500 hover:scale-[1.02] animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <div className="absolute inset-0 bg-gradient-to-r from-neon-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-pink-500/20 p-6 hover:border-pink-500/50 transition-all duration-500 hover:scale-[1.02]">
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div className="relative flex items-start space-x-4 sm:space-x-6">
-            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-neon-pink to-neon-green flex items-center justify-center animate-glow">
+            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-pink-500 to-blue-400 flex items-center justify-center">
               <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
             <div className="flex-1">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 flex items-center">
-                <span className="bg-gradient-to-r from-neon-pink to-neon-green bg-clip-text text-transparent mr-3">3.</span>
+                <span className="bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent mr-3">3.</span>
                 Avance os Níveis
               </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
@@ -96,15 +118,15 @@ const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
         </div>
 
         {/* Step 4 */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-gray-800/50 to-gray-700/30 backdrop-blur-sm border border-neon-green/20 p-6 sm:p-8 hover:border-neon-green/40 transition-all duration-500 hover:scale-[1.02] animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          <div className="absolute inset-0 bg-gradient-to-r from-neon-green/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-green-400/20 p-6 hover:border-green-400/50 transition-all duration-500 hover:scale-[1.02]">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div className="relative flex items-start space-x-4 sm:space-x-6">
-            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-neon-green to-neon-blue flex items-center justify-center animate-glow">
+            <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-green-400 to-blue-400 flex items-center justify-center">
               <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
             </div>
             <div className="flex-1">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 flex items-center">
-                <span className="bg-gradient-to-r from-neon-green to-neon-blue bg-clip-text text-transparent mr-3">4.</span>
+                <span className="bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent mr-3">4.</span>
                 Sistema de Vidas
               </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
@@ -117,69 +139,77 @@ const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
       </div>
 
       {/* Game Modes */}
-      <div className="mt-12 sm:mt-16 text-center">
-        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-neon-glow">Modos de Jogo</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto mb-8 sm:mb-12">
-          <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/60 to-gray-700/40 backdrop-blur-sm border border-neon-blue/30 p-6 hover:border-neon-blue/60 transition-all duration-500 hover:scale-105">
-            <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative">
-              <div className="flex items-center justify-center mb-4">
-                <Brain className="w-8 h-8 text-neon-blue mr-2" />
-                <h4 className="text-neon-blue font-bold text-lg">Normal</h4>
-              </div>
+      <div className="mt-12 w-full max-w-4xl relative z-10">
+        <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6 text-center">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+            MODOS DE JOGO
+          </span>
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Normal Mode */}
+          <div className="group relative overflow-hidden rounded-xl bg-gray-900/80 backdrop-blur-sm border border-blue-400/30 p-6 hover:border-blue-400/60 transition-all duration-500 hover:scale-105">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative flex flex-col items-center text-center">
+              <Brain className="w-8 h-8 text-blue-400 mb-2" />
+              <h4 className="text-blue-400 font-bold text-lg mb-2">Normal</h4>
               <p className="text-gray-300 text-sm">4 cores • Ritmo padrão para aprender</p>
             </div>
           </div>
-          <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/60 to-gray-700/40 backdrop-blur-sm border border-neon-orange/30 p-6 hover:border-neon-orange/60 transition-all duration-500 hover:scale-105">
-            <div className="absolute inset-0 bg-gradient-to-br from-neon-orange/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative">
-              <div className="flex items-center justify-center mb-4">
-                <Zap className="w-8 h-8 text-neon-orange mr-2" />
-                <h4 className="text-neon-orange font-bold text-lg">Velocidade</h4>
-              </div>
-              <p className="text-gray-300 text-sm">4 cores • Sequências super rápidas • 2x pontos</p>
+
+          {/* Speed Mode */}
+          <div className="group relative overflow-hidden rounded-xl bg-gray-900/80 backdrop-blur-sm border border-yellow-400/30 p-6 hover:border-yellow-400/60 transition-all duration-500 hover:scale-105">
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="relative flex flex-col items-center text-center">
+              <Zap className="w-8 h-8 text-yellow-400 mb-2 animate-pulse" />
+              <h4 className="text-yellow-400 font-bold text-lg mb-2">Velocidade</h4>
+              <p className="text-gray-300 text-sm">4 cores • Sequências rápidas • 2x pontos</p>
             </div>
           </div>
-          <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/60 to-gray-700/40 backdrop-blur-sm border border-red-400/30 p-6 hover:border-red-400/60 transition-all duration-500 hover:scale-105">
+
+          {/* Hard Mode */}
+          <div className="group relative overflow-hidden rounded-xl bg-gray-900/80 backdrop-blur-sm border border-red-400/30 p-6 hover:border-red-400/60 transition-all duration-500 hover:scale-105">
             <div className="absolute inset-0 bg-gradient-to-br from-red-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative">
-              <div className="flex items-center justify-center mb-4">
-                <Skull className="w-8 h-8 text-red-400 mr-2" />
-                <h4 className="text-red-400 font-bold text-lg">Difícil</h4>
-              </div>
-              <p className="text-gray-300 text-sm">6 cores • Velocidade alta • 2.5x pontos</p>
+            <div className="relative flex flex-col items-center text-center">
+              <Skull className="w-8 h-8 text-red-400 mb-2" />
+              <h4 className="text-red-400 font-bold text-lg mb-2">Difícil</h4>
+              <p className="text-gray-300 text-sm">6 cores • Alta velocidade • 2.5x pontos</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Game Pad Preview */}
-      <div className="mt-8 sm:mt-12 text-center">
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8">Botões do Jogo</h3>
-        <div className="flex flex-col lg:flex-row items-center justify-center space-y-8 lg:space-y-0 lg:space-x-12">
+      <div className="mt-12 w-full max-w-4xl relative z-10">
+        <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 text-center">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+            BOTÕES DO JOGO
+          </span>
+        </h3>
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
           {/* Normal and Speed mode colors */}
           <div className="text-center">
             <p className="text-gray-400 text-sm mb-4">Modo Normal & Velocidade (4 cores)</p>
             <div className="w-40 h-40 mx-auto">
               <div className="grid grid-cols-2 gap-3 aspect-square">
-                <div className="aspect-square rounded-xl bg-gradient-to-br from-neon-blue/40 to-neon-blue/20 border-2 border-neon-blue/60 animate-pulse hover:scale-110 transition-transform duration-300"></div>
-                <div className="aspect-square rounded-xl bg-gradient-to-br from-neon-purple/40 to-neon-purple/20 border-2 border-neon-purple/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.2s' }}></div>
-                <div className="aspect-square rounded-xl bg-gradient-to-br from-neon-pink/40 to-neon-pink/20 border-2 border-neon-pink/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.4s' }}></div>
-                <div className="aspect-square rounded-xl bg-gradient-to-br from-neon-green/40 to-neon-green/20 border-2 border-neon-green/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.6s' }}></div>
+                <div className="aspect-square rounded-xl bg-gradient-to-br from-blue-400/40 to-blue-400/20 border-2 border-blue-400/60 animate-pulse hover:scale-110 transition-transform duration-300"></div>
+                <div className="aspect-square rounded-xl bg-gradient-to-br from-purple-500/40 to-purple-500/20 border-2 border-purple-500/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.2s' }}></div>
+                <div className="aspect-square rounded-xl bg-gradient-to-br from-pink-500/40 to-pink-500/20 border-2 border-pink-500/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.4s' }}></div>
+                <div className="aspect-square rounded-xl bg-gradient-to-br from-green-400/40 to-green-400/20 border-2 border-green-400/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.6s' }}></div>
               </div>
             </div>
           </div>
+          
           {/* Hard mode colors */}
           <div className="text-center">
             <p className="text-gray-400 text-sm mb-4">Modo Difícil (6 cores)</p>
             <div className="w-48 h-40 mx-auto">
               <div className="grid grid-cols-3 gap-2 aspect-[3/2]">
-                <div className="aspect-square rounded-lg bg-gradient-to-br from-neon-blue/40 to-neon-blue/20 border-2 border-neon-blue/60 animate-pulse hover:scale-110 transition-transform duration-300"></div>
-                <div className="aspect-square rounded-lg bg-gradient-to-br from-neon-purple/40 to-neon-purple/20 border-2 border-neon-purple/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.1s' }}></div>
-                <div className="aspect-square rounded-lg bg-gradient-to-br from-neon-pink/40 to-neon-pink/20 border-2 border-neon-pink/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.2s' }}></div>
-                <div className="aspect-square rounded-lg bg-gradient-to-br from-neon-green/40 to-neon-green/20 border-2 border-neon-green/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.3s' }}></div>
-                <div className="aspect-square rounded-lg bg-gradient-to-br from-neon-orange/40 to-neon-orange/20 border-2 border-neon-orange/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.4s' }}></div>
-                <div className="aspect-square rounded-lg bg-gradient-to-br from-yellow-400/40 to-yellow-400/20 border-2 border-yellow-400/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.5s' }}></div>
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-blue-400/40 to-blue-400/20 border-2 border-blue-400/60 animate-pulse hover:scale-110 transition-transform duration-300"></div>
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-purple-500/40 to-purple-500/20 border-2 border-purple-500/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.1s' }}></div>
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-pink-500/40 to-pink-500/20 border-2 border-pink-500/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.2s' }}></div>
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-green-400/40 to-green-400/20 border-2 border-green-400/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.3s' }}></div>
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-yellow-400/40 to-yellow-400/20 border-2 border-yellow-400/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.4s' }}></div>
+                <div className="aspect-square rounded-lg bg-gradient-to-br from-red-400/40 to-red-400/20 border-2 border-red-400/60 animate-pulse hover:scale-110 transition-transform duration-300" style={{ animationDelay: '0.5s' }}></div>
               </div>
             </div>
           </div>
@@ -187,32 +217,34 @@ const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
       </div>
 
       {/* Tips */}
-      <div className="mt-12 sm:mt-16 pb-8">
-        <div className="relative overflow-hidden bg-gradient-to-r from-neon-blue/10 via-neon-purple/10 to-neon-pink/10 rounded-2xl p-6 sm:p-8 border border-neon-blue/30 max-w-2xl mx-auto backdrop-blur-sm">
-          <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/5 via-neon-purple/5 to-neon-pink/5 animate-pulse"></div>
+      <div className="mt-12 w-full max-w-2xl relative z-10">
+        <div className="relative overflow-hidden bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-500/10 to-pink-500/10 opacity-30"></div>
           <div className="relative">
-            <h3 className="text-xl sm:text-2xl font-bold text-neon-blue mb-4 sm:mb-6 flex items-center justify-center">
-              🎯 Dicas de Sucesso
+            <h3 className="text-xl sm:text-2xl font-bold text-center mb-6">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                DICAS DE SUCESSO
+              </span>
             </h3>
-            <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-gray-300">
+            <ul className="space-y-3 text-sm sm:text-base text-gray-300">
               <li className="flex items-start">
-                <span className="text-neon-blue mr-2">•</span>
+                <span className="text-blue-400 mr-2">•</span>
                 Concentre-se totalmente na sequência
               </li>
               <li className="flex items-start">
-                <span className="text-neon-purple mr-2">•</span>
+                <span className="text-purple-400 mr-2">•</span>
                 Use os sons para ajudar na memória
               </li>
               <li className="flex items-start">
-                <span className="text-neon-pink mr-2">•</span>
+                <span className="text-pink-400 mr-2">•</span>
                 Comece devagar, a velocidade vem com a prática
               </li>
               <li className="flex items-start">
-                <span className="text-neon-green mr-2">•</span>
+                <span className="text-green-400 mr-2">•</span>
                 Respire fundo e mantenha a calma
               </li>
               <li className="flex items-start">
-                <span className="text-neon-orange mr-2">•</span>
+                <span className="text-yellow-400 mr-2">•</span>
                 No modo velocidade, confie nos seus reflexos!
               </li>
               <li className="flex items-start">
@@ -223,6 +255,18 @@ const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onBack }) => {
           </div>
         </div>
       </div>
+
+      {/* Animation styles */}
+      <style>{`
+        @keyframes gridMove {
+          0% { background-position: 0 0; }
+          100% { background-position: 40px 40px; }
+        }
+        @keyframes moveLine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </div>
   );
 };
