@@ -2,21 +2,14 @@
 
 Um jogo de memória moderno e viciante e múltiplos modos de jogo.
 
-![Neon Memory](https://img.shields.io/badge/Status-Ativo-brightgreen)
-![Version](https://img.shields.io/badge/Version-1.0.0-blue)
-![React](https://img.shields.io/badge/React-18.3.1-61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-Latest-3178C6)
-
 ## ✨ Funcionalidades
 
 ### 🎯 Modos de Jogo
 - **Clássico**: Jogo tradicional de memória
-- **Contra o Tempo**: Desafie seus reflexos com tempo limitado
-- **Sequência Infinita**: Até onde sua memória consegue chegar?
 - **Multiplayer**: Jogue online contra outros jogadores em tempo real
 
 ### 🎨 Visual e Design
-- Interface neon cyberpunk moderna
+- Interface neon moderno
 - Animações fluidas e efeitos visuais impressionantes
 - Design totalmente responsivo
 - Modo escuro nativo
@@ -41,7 +34,7 @@ Um jogo de memória moderno e viciante e múltiplos modos de jogo.
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Frontend**: React 18 + TypeScript
+- **Frontend**: React + TypeScript
 - **Styling**: Tailwind CSS com sistema de design customizado
 - **Backend**: Supabase (PostgreSQL + Realtime)
 - **Build Tool**: Vite
@@ -76,10 +69,10 @@ O jogo utiliza um sistema de design neon customizado com:
 
 ```bash
 # Clone o repositório
-git clone <sua-url-do-repo>
+git clone <https://github.com/PabloG-7/jogo-memoria>
 
 # Entre no diretório
-cd neon-memory
+cd jogo-memoria
 
 # Instale as dependências
 npm install
@@ -90,35 +83,6 @@ cp .env.example .env.local
 # Execute o projeto
 npm run dev
 ```
-
-O jogo estará disponível em `http://localhost:5173`
-
-## 🌐 Deploy
-
-### Lovable (Recomendado)
-1. Acesse [Lovable](https://lovable.dev)
-2. Clique em "Publish" no editor
-3. Seu jogo estará online instantaneamente!
-
-### Vercel/Netlify
-```bash
-# Build para produção
-npm run build
-
-# A pasta 'dist' conterá os arquivos para deploy
-```
-
-## 🎮 Multiplayer Setup
-
-Para ativar o modo multiplayer, você precisa:
-
-1. **Conta Supabase**: Crie uma conta gratuita em [supabase.com](https://supabase.com)
-2. **Configure as variáveis**:
-   ```env
-   VITE_SUPABASE_URL=sua_url_do_supabase
-   VITE_SUPABASE_ANON_KEY=sua_chave_anonima
-   ```
-3. **Execute as migrations** do banco de dados (incluídas no projeto)
 
 ## 📁 Estrutura do Projeto
 
