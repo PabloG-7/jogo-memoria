@@ -45,45 +45,45 @@ const MultiplayerGame: React.FC<MultiplayerGameProps> = ({
 
   // Executar sequência apenas quando o tamanho da sequência muda (nova rodada)
   useEffect(() => {
-    const currentLength = gameState.gameSequence.length;
-    
-    if (currentLength > 0 && currentLength !== lastSequenceLength && !isShowingSequence) {
-      setLastSequenceLength(currentLength);
-      
-      // Função local para mostrar sequência, evitando dependências
-      const showSequenceLocal = async () => {
-        if (gameState.gameSequence.length === 0) return;
+  const currentLength = gameState.gameSequence.length;
 
-        setIsShowingSequence(true);
-        setGameStateLocal('showing');
-        setPlayerSequence([]);
-        setShowingIndex(0);
+  const isFirstShow = lastSequenceLength === 0 && currentLength === 1;
 
-        // Delay inicial
-        await new Promise(resolve => setTimeout(resolve, 1000));
+  if ((currentLength > 0 && currentLength !== lastSequenceLength && !isShowingSequence) || isFirstShow) {
+    setLastSequenceLength(currentLength);
 
-        // Mostrar cada cor da sequência
-        for (let i = 0; i < gameState.gameSequence.length; i++) {
-          const color = gameState.gameSequence[i] as Color;
-          setActiveColor(color);
-          setShowingIndex(i);
+    const showSequenceLocal = async () => {
+      if (gameState.gameSequence.length === 0) return;
 
-          if (soundEnabled) {
-            playBeep(colors[color].sound, 400, 0.15);
-          }
+      setIsShowingSequence(true);
+      setGameStateLocal('showing');
+      setPlayerSequence([]);
+      setShowingIndex(0);
 
-          await new Promise(resolve => setTimeout(resolve, 600));
-          setActiveColor(null);
-          await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      for (let i = 0; i < gameState.gameSequence.length; i++) {
+        const color = gameState.gameSequence[i] as Color;
+        setActiveColor(color);
+        setShowingIndex(i);
+
+        if (soundEnabled) {
+          playBeep(colors[color].sound, 400, 0.15);
         }
 
-        setIsShowingSequence(false);
-        setGameStateLocal('waiting');
-      };
-      
-      showSequenceLocal();
-    }
-  }, [gameState.gameSequence.length, lastSequenceLength, isShowingSequence, soundEnabled, playBeep]);
+        await new Promise(resolve => setTimeout(resolve, 600));
+        setActiveColor(null);
+        await new Promise(resolve => setTimeout(resolve, 200));
+      }
+
+      setIsShowingSequence(false);
+      setGameStateLocal('waiting');
+    };
+
+    showSequenceLocal();
+  }
+}, [gameState.gameSequence.length, lastSequenceLength, isShowingSequence, soundEnabled, playBeep]);
+
 
   // Clique em cor
   const handleColorClick = (color: Color) => {
