@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Play, Plus, ArrowLeft, Users } from 'lucide-react';
 
 interface MultiplayerEntryProps {
@@ -16,17 +16,6 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
 }) => {
   const [playerName, setPlayerName] = useState('');
 
-  // 🔧 Ajuste da altura real da tela (corrige bug do iOS com teclado)
-  useEffect(() => {
-    const atualizarAltura = () => {
-      document.documentElement.style.setProperty('--altura-disponivel', `${window.innerHeight}px`);
-    };
-
-    atualizarAltura();
-    window.addEventListener('resize', atualizarAltura);
-    return () => window.removeEventListener('resize', atualizarAltura);
-  }, []);
-
   const handleCreateRoom = () => {
     if (playerName.trim()) {
       onCreateRoom(playerName.trim());
@@ -40,10 +29,7 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
   };
 
   return (
-    <div
-      className="flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gray-900"
-      style={{ height: 'var(--altura-disponivel)' }}
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gray-900">
       {/* Enhanced Background - Same as main menu */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 z-0">
         {/* Animated Grid Pattern */}
