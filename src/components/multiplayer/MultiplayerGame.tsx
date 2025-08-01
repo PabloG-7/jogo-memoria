@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { MultiplayerGameState } from '@/types/multiplayer';
@@ -37,57 +37,55 @@ const MultiplayerGame: React.FC<MultiplayerGameProps> = ({
   const [showingIndex, setShowingIndex] = useState(0);
   const [gameStateLocal, setGameStateLocal] = useState<'waiting' | 'showing' | 'gameover'>('waiting');
   const [lastSequenceLength, setLastSequenceLength] = useState(0);
+  const [isInputLocked, setIsInputLocked] = useState(false); // novo estado
 
   const { playBeep, playSuccessSound, playErrorSound, playGameOverSound } = useAudio();
 
   const currentOpponent = gameState.isPlayer1 ? gameState.room?.player2 : gameState.room?.player1;
 
-
-  // Executar sequência apenas quando o tamanho da sequência muda (nova rodada)
   useEffect(() => {
-  const currentLength = gameState.gameSequence.length;
+    const currentLength = gameState.gameSequence.length;
 
-  const isFirstShow = lastSequenceLength === 0 && currentLength === 1;
+    // Corrige para todos os jogadores verem a sequência no nível 1
+    const isFirstShow = lastSequenceLength === 0 && currentLength === 1 && gameState.room?.level === 1;
 
-  if ((currentLength > 0 && currentLength !== lastSequenceLength && !isShowingSequence) || isFirstShow) {
-    setLastSequenceLength(currentLength);
+    if ((currentLength > 0 && currentLength !== lastSequenceLength && !isShowingSequence) || isFirstShow) {
+      setLastSequenceLength(currentLength);
 
-    const showSequenceLocal = async () => {
-      if (gameState.gameSequence.length === 0) return;
+      const showSequenceLocal = async () => {
+        if (gameState.gameSequence.length === 0) return;
 
-      setIsShowingSequence(true);
-      setGameStateLocal('showing');
-      setPlayerSequence([]);
-      setShowingIndex(0);
+        setIsShowingSequence(true);
+        setGameStateLocal('showing');
+        setPlayerSequence([]);
+        setShowingIndex(0);
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
 
-      for (let i = 0; i < gameState.gameSequence.length; i++) {
-        const color = gameState.gameSequence[i] as Color;
-        setActiveColor(color);
-        setShowingIndex(i);
+        for (let i = 0; i < gameState.gameSequence.length; i++) {
+          const color = gameState.gameSequence[i] as Color;
+          setActiveColor(color);
+          setShowingIndex(i);
 
-        if (soundEnabled) {
-          playBeep(colors[color].sound, 400, 0.15);
+          if (soundEnabled) {
+            playBeep(colors[color].sound, 400, 0.15);
+          }
+
+          await new Promise(resolve => setTimeout(resolve, 600));
+          setActiveColor(null);
+          await new Promise(resolve => setTimeout(resolve, 200));
         }
 
-        await new Promise(resolve => setTimeout(resolve, 600));
-        setActiveColor(null);
-        await new Promise(resolve => setTimeout(resolve, 200));
-      }
+        setIsShowingSequence(false);
+        setGameStateLocal('waiting');
+      };
 
-      setIsShowingSequence(false);
-      setGameStateLocal('waiting');
-    };
+      showSequenceLocal();
+    }
+  }, [gameState.gameSequence.length, lastSequenceLength, isShowingSequence, soundEnabled, playBeep, gameState.room?.level]);
 
-    showSequenceLocal();
-  }
-}, [gameState.gameSequence.length, lastSequenceLength, isShowingSequence, soundEnabled, playBeep]);
-
-
-  // Clique em cor
   const handleColorClick = (color: Color) => {
-    if (!gameState.isMyTurn || isShowingSequence || gameState.gameOver) return;
+    if (isInputLocked || !gameState.isMyTurn || isShowingSequence || gameState.gameOver) return;
 
     const newPlayerSequence = [...playerSequence, color];
     setPlayerSequence(newPlayerSequence);
@@ -99,22 +97,23 @@ const MultiplayerGame: React.FC<MultiplayerGameProps> = ({
 
     setTimeout(() => setActiveColor(null), 200);
 
-    // Verificar se a cor está correta
     const currentIndex = newPlayerSequence.length - 1;
     if (newPlayerSequence[currentIndex] === gameState.gameSequence[currentIndex]) {
       if (newPlayerSequence.length === gameState.gameSequence.length) {
-        // Sequência completa e correta
+        // Sequência completa
+        setIsInputLocked(true);
         setTimeout(() => {
           if (soundEnabled) {
             playSuccessSound();
           }
-          // Adicionar nova cor e passar o turno
           onAddToSequence();
           setPlayerSequence([]);
+          setIsInputLocked(false);
         }, 500);
       }
     } else {
-      // Erro - fim de jogo
+      // Clique errado
+      setIsInputLocked(true);
       setTimeout(() => {
         if (soundEnabled) {
           playErrorSound();
@@ -125,10 +124,9 @@ const MultiplayerGame: React.FC<MultiplayerGameProps> = ({
     }
   };
 
-
   if (gameState.gameOver) {
     const isWinner = gameState.winner === gameState.playerName;
-    
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center p-4">
         <Card className="w-full max-w-md border-primary/20 bg-card/80 backdrop-blur-sm">
@@ -136,7 +134,7 @@ const MultiplayerGame: React.FC<MultiplayerGameProps> = ({
             <div className="text-6xl mb-4">
               {isWinner ? '🎉' : '😔'}
             </div>
-            
+
             <div>
               <h2 className="text-3xl font-bold mb-2">
                 {isWinner ? (
