@@ -29,7 +29,7 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gray-900">
+    <div className="h-screen flex flex-col items-center pt-16 p-4 relative overflow-hidden bg-gray-900">
       {/* Enhanced Background - Same as main menu */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 z-0">
         {/* Animated Grid Pattern */}
@@ -129,8 +129,8 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
           </div>
         </div>
 
-        {/* Footer Note */}
-        <div className="text-center">
+        {/* Footer Note - Removido o padding extra */}
+        <div className="text-center pb-4">
           <p className="text-xs text-gray-500 tracking-wider">
             🎮 Desafie seus amigos em tempo real!
           </p>
@@ -146,6 +146,18 @@ const MultiplayerEntry: React.FC<MultiplayerEntryProps> = ({
         @keyframes moveLine {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
+        }
+        @supports (-webkit-touch-callout: none) {
+          /* Safari-specific styles */
+          body {
+            height: 100vh;
+            height: -webkit-fill-available;
+            overflow: hidden;
+          }
+          .h-screen {
+            height: 100vh;
+            height: -webkit-fill-available;
+          }
         }
       `}</style>
     </div>
