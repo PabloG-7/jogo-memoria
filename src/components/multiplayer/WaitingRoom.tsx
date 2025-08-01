@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { GameRoom } from '@/types/multiplayer';
-import { Users, Copy, Clock, ArrowLeft, Loader2 } from 'lucide-react';
+import { Users, Copy, ArrowLeft, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface WaitingRoomProps {
@@ -33,12 +33,12 @@ const WaitingRoom: React.FC<WaitingRoomProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center p-4">
+    <div className="h-screen bg-gradient-to-br from-background to-secondary flex items-start pt-20 justify-center p-4 overflow-hidden">
       <div className="w-full max-w-md space-y-6">
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2 mb-6">
             <Users className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text">
               Sala Criada!
             </h1>
           </div>
@@ -98,16 +98,6 @@ const WaitingRoom: React.FC<WaitingRoomProps> = ({
                   </div>
                 </div>
               </div>
-
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                <div className="flex items-center gap-2 text-blue-400">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm font-medium">Status:</span>
-                </div>
-                <p className="text-sm text-blue-300 mt-1">
-                  O jogo começará automaticamente quando outro jogador entrar na sala.
-                </p>
-              </div>
             </div>
 
             <Button
@@ -120,12 +110,6 @@ const WaitingRoom: React.FC<WaitingRoomProps> = ({
             </Button>
           </CardContent>
         </Card>
-
-        <div className="text-center">
-          <p className="text-xs text-muted-foreground">
-            💡 Dica: Compartilhe o código <span className="text-primary font-mono">{room.code}</span> com seu amigo!
-          </p>
-        </div>
       </div>
     </div>
   );
