@@ -1,4 +1,3 @@
-
 import { useCallback, useRef } from 'react';
 
 export const useAudio = () => {
@@ -10,6 +9,13 @@ export const useAudio = () => {
     }
     return audioContextRef.current;
   }, []);
+
+  const unlockAudioContext = useCallback(() => {
+    const audioContext = initAudioContext();
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+  }, [initAudioContext]);
 
   const playBeep = useCallback((frequency: number, duration: number = 200, volume: number = 0.1) => {
     try {
@@ -64,6 +70,7 @@ export const useAudio = () => {
     playClickSound,
     playGameOverSound,
     playLevelUpSound,
-    playBeep
+    playBeep,
+    unlockAudioContext,
   };
 };
