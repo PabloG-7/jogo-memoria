@@ -43,9 +43,9 @@ const GameMenu: React.FC<GameMenuProps> = ({
             NEON MEMORY
           </span>
         </h1>
-        <p className="text-sm sm:text-base md:text-lg text-gray-300 font-light tracking-wider animate-pulse">
-          Teste sua memória no futuro!
-        </p>
+       <p className="text-base sm:text-lg md:text-xl text-gray-300 font-light tracking-wider animate-pulse">
+  Teste sua memória no futuro!
+</p>
       </div>
 
       {/* High Score */}
