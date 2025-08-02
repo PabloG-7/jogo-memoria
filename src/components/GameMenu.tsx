@@ -38,7 +38,7 @@ const GameMenu: React.FC<GameMenuProps> = ({
 
       {/* Title */}
       <div className="text-center mb-8 md:mb-12 animate-bounce-in relative z-10">
-        <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-3 md:mb-4 relative overflow-hidden">
+        <h1 className="text-7xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-3 md:mb-4 relative overflow-hidden">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-shine">
             NEON MEMORY
           </span>
