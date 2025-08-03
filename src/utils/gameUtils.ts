@@ -1,4 +1,3 @@
-
 import { Color, GameMode } from '../types/game';
 import { Brain, Zap, Skull } from 'lucide-react';
 
@@ -29,24 +28,17 @@ export const calculateScore = (level: number, gameMode: GameMode): number => {
   let bonusMultiplier = 1;
   if (gameMode === 'speed') bonusMultiplier = 2;
   if (gameMode === 'hard') bonusMultiplier = 2.5;
-  
+
   return Math.floor((level * 10) * bonusMultiplier);
 };
 
 export const getGameTimings = (gameMode: GameMode, level: number) => {
-  if (gameMode === 'speed') {
+  if (gameMode === 'speed' || gameMode === 'hard') {
     return {
       baseDelay: Math.max(100, 500 - (level * 40)),
       showDuration: Math.max(80, 300 - (level * 20)),
       waitTime: 100,
       initialDelay: 200
-    };
-  } else if (gameMode === 'hard') {
-    return {
-      baseDelay: Math.max(200, 600 - (level * 25)),
-      showDuration: Math.max(150, 400 - (level * 15)),
-      waitTime: 200,
-      initialDelay: 400
     };
   } else {
     return {
