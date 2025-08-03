@@ -29,23 +29,31 @@ export const calculateScore = (level: number, gameMode: GameMode): number => {
   if (gameMode === 'speed') bonusMultiplier = 2;
   if (gameMode === 'hard') bonusMultiplier = 2.5;
 
-  return Math.floor((level * 10) * bonusMultiplier);
+  return Math.floor(level * 10 * bonusMultiplier);
 };
 
 export const getGameTimings = (gameMode: GameMode, level: number) => {
-  if (gameMode === 'speed' || gameMode === 'hard') {
+  if (gameMode === 'speed') {
+    // modo speed rápido fixo
     return {
-      baseDelay: Math.max(100, 500 - (level * 40)),
-      showDuration: Math.max(80, 300 - (level * 20)),
-      waitTime: 100,
-      initialDelay: 200
-    };
-  } else {
-    return {
-      baseDelay: Math.max(400, 700 - (level * 15)),
-      showDuration: Math.max(300, 450 - (level * 10)),
-      waitTime: 300,
-      initialDelay: 600
+      baseDelay: 140,
+      showDuration: 110,
+      waitTime: 80,
+      initialDelay: 150,
     };
   }
+  if (gameMode === 'hard') {
+    return {
+      baseDelay: 150,
+      showDuration: 120,
+      waitTime: 70,
+      initialDelay: 150,
+    };
+  }
+  return {
+    baseDelay: Math.max(400, 700 - level * 15),
+    showDuration: Math.max(300, 450 - level * 10),
+    waitTime: 300,
+    initialDelay: 600,
+  };
 };
