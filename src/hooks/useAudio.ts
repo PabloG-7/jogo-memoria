@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 export const useAudio = () => {
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -63,6 +63,23 @@ export const useAudio = () => {
     setTimeout(() => playBeep(659.25, 150, 0.1), 150);
     setTimeout(() => playBeep(783.99, 300, 0.1), 300);
   }, [playBeep]);
+
+  // ✅ Corrige o bug do áudio que para ao sair e voltar pro app
+  useEffect(() => {
+    const audioContext = initAudioContext();
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [initAudioContext]);
 
   return {
     playSuccessSound,
