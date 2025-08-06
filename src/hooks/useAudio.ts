@@ -18,27 +18,36 @@ export const useAudio = () => {
   }, [initAudioContext]);
 
   const playBeep = useCallback((frequency: number, duration: number = 200, volume: number = 0.1) => {
-    try {
-      const audioContext = initAudioContext();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
+  try {
+    const audioContext = initAudioContext();
 
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.frequency.value = frequency;
-      oscillator.type = 'sine';
-
-      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-      gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration / 1000);
-
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + duration / 1000);
-    } catch (error) {
-      console.log('Audio não suportado neste dispositivo');
+    // 🛠 Reforça o resume() sempre que for tocar
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().then(() => {
+        playBeep(frequency, duration, volume); // tenta novamente após retomar
+      });
+      return;
     }
-  }, [initAudioContext]);
+
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.value = frequency;
+    oscillator.type = 'sine';
+
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration / 1000);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration / 1000);
+  } catch (error) {
+    console.log('Audio não suportado neste dispositivo');
+  }
+}, [initAudioContext]);
 
   const playSuccessSound = useCallback(() => {
     playBeep(523.25, 150, 0.15); // C note
