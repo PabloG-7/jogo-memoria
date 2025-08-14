@@ -78,7 +78,7 @@ O jogo utiliza um sistema de design neon customizado com:
 
 ```bash
 # Clone o repositório
-git clone <https://github.com/PabloG-7/jogo-memoria>
+git clone https://github.com/PabloG-7/jogo-memoria
 
 # Entre no diretório
 cd jogo-memoria
