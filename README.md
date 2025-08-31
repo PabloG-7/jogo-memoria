@@ -6,7 +6,7 @@ Um jogo de memória moderno e viciante e múltiplos modos de jogo.
 
 🔗 Acesse o projeto online: [https://jogo-memoria-gold.vercel.app/](https://jogo-memoria-gold.vercel.app/)
 
-![Neon Memory - Demonstração](https://raw.githubusercontent.com/PabloG-7/jogo-memoria/refs/heads/main/neon-memory-apresentacao.png)
+![Neon Memory - Demonstração](https://raw.githubusercontent.com/PabloG-7/jogo-memoria/refs/heads/main/neon-linkedin.png)
 
 ## ✨ Funcionalidades
 
