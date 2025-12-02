@@ -18,45 +18,45 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
 }) => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 animate-fade-in relative overflow-hidden bg-gray-900">
-      {/* Enhanced Background (same as menu) */}
+      {/* Background - Same as GameMenu */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 z-0">
-        {/* Animated Grid Pattern */}
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: 'linear-gradient(to right, #7c3aed 1px, transparent 1px), linear-gradient(to bottom, #7c3aed 1px, transparent 1px)',
           backgroundSize: '40px 40px',
-          animation: 'gridMove 20s linear infinite'
+          animation: 'gridMove 25s linear infinite'
         }}></div>
         
-        {/* Floating Neon Circles */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-purple-600/10 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 rounded-full bg-blue-600/10 blur-3xl animate-pulse delay-3000"></div>
-        <div className="absolute top-1/3 right-1/3 w-48 h-48 rounded-full bg-pink-600/10 blur-2xl animate-pulse delay-2000"></div>
-        
-        {/* Subtle Moving Lines */}
-        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-moveLine"></div>
-        <div className="absolute bottom-0 right-0 w-0.5 h-full bg-gradient-to-b from-transparent via-blue-500/30 to-transparent animate-moveLine delay-2000"></div>
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 rounded-full bg-purple-600/15 blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-blue-600/15 blur-3xl animate-pulse-slow delay-2000"></div>
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/20 to-transparent animate-scanline"></div>
       </div>
 
-      {/* Header with Back Button */}
-      <div className="w-full max-w-4xl flex items-center mb-4 md:mb-8 relative z-10">
+      {/* Header */}
+      <div className="w-full max-w-2xl flex items-center mb-8 relative z-10 px-4">
         <button
           onClick={onBack}
-          className="group flex items-center space-x-2 text-gray-300 hover:text-white transition-all duration-300 text-sm sm:text-base"
+          className="group flex items-center space-x-2 text-gray-300 hover:text-white transition-all duration-300"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateX(-5px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateX(0)';
+          }}
         >
-          <div className="p-2 rounded-full bg-gray-800/80 backdrop-blur-sm border border-gray-700 group-hover:border-purple-500/50 transition-colors">
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />
+          <div className="p-2 rounded-full bg-gray-800/80 backdrop-blur-sm border border-gray-700 group-hover:border-purple-500/50 group-hover:bg-purple-500/10 transition-all duration-300">
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform" />
           </div>
-          <span className="hidden sm:inline">Voltar</span>
+          <span className="text-sm sm:text-base font-medium tracking-wider">VOLTAR</span>
         </button>
       </div>
 
-      {/* Title Section */}
-      <div className="text-center mb-8 md:mb-12 relative z-10">
+      {/* Title */}
+      <div className="text-center mb-12 relative z-10">
         <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 mb-6 animate-pulse">
           <Settings className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
         </div>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 md:mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-shine">
             CONFIGURAÇÕES
           </span>
         </h1>
@@ -66,10 +66,13 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
       </div>
 
       {/* Settings Options */}
-      <div className="space-y-6 w-full max-w-2xl relative z-10">
-        {/* Sound Toggle */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-green-400/30 p-6 hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02]">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="space-y-6 w-full max-w-2xl relative z-10 px-4">
+        {/* Sound Toggle - Com gradiente */}
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-green-400/30 p-6 hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02]"
+          style={{
+            background: 'linear-gradient(45deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.1))'
+          }}
+        >
           <div className="relative flex items-center justify-between">
             <div className="flex items-center space-x-4 sm:space-x-6">
               <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-500 ${
@@ -105,9 +108,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
           </div>
         </div>
 
-        {/* High Score */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-purple-500/30 p-6 hover:border-purple-500/60 transition-all duration-500 hover:scale-[1.02]">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        {/* High Score - Com gradiente */}
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-purple-500/30 p-6 hover:border-purple-500/60 transition-all duration-500 hover:scale-[1.02]"
+          style={{
+            background: 'linear-gradient(45deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1))'
+          }}
+        >
           <div className="relative flex items-center justify-between">
             <div className="flex items-center space-x-4 sm:space-x-6">
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
@@ -116,7 +122,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Recorde</h3>
                 <p className="text-sm sm:text-base text-gray-400">
-                  Sua melhor pontuação: <span className="text-purple-400 font-semibold">{highScore}</span>
+                  Sua melhor pontuação: <span className="text-purple-300 font-semibold">{highScore}</span>
                 </p>
               </div>
             </div>
@@ -130,9 +136,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
           </div>
         </div>
 
-        {/* Device Info */}
-        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-blue-400/30 p-6 hover:border-blue-400/60 transition-all duration-500 hover:scale-[1.02]">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        {/* Device Info - Com gradiente */}
+        <div className="group relative overflow-hidden rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-blue-400/30 p-6 hover:border-blue-400/60 transition-all duration-500 hover:scale-[1.02]"
+          style={{
+            background: 'linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1))'
+          }}
+        >
           <div className="relative flex items-start space-x-4 sm:space-x-6">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
               <Smartphone className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
@@ -149,9 +158,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
       </div>
 
       {/* Tips */}
-      <div className="mt-12 w-full max-w-lg relative z-10">
-        <div className="relative overflow-hidden bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-500/10 to-pink-500/10 opacity-30"></div>
+      <div className="mt-12 w-full max-w-lg relative z-10 px-4">
+        <div className="relative overflow-hidden bg-gray-900/80 backdrop-blur-sm rounded-2xl p-6 border border-purple-500/30"
+          style={{
+            background: 'linear-gradient(45deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))'
+          }}
+        >
           <div className="relative text-center">
             <h3 className="text-xl sm:text-2xl font-bold mb-4">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
@@ -172,9 +184,28 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
           0% { background-position: 0 0; }
           100% { background-position: 40px 40px; }
         }
-        @keyframes moveLine {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+        @keyframes scanline {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100vh); }
+        }
+        @keyframes shine {
+          0% {
+            background-position: -200%;
+          }
+          100% {
+            background-position: 200%;
+          }
+        }
+        .animate-shine {
+          background-size: 200% auto;
+          animation: shine 3s linear infinite;
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 4s ease-in-out infinite;
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.25; }
         }
       `}</style>
     </div>
