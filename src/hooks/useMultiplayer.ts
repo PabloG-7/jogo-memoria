@@ -36,13 +36,14 @@ export const useMultiplayer = () => {
     }
   }, []);
 
-  // Criar nova sala
+  // Criar nova sala - CORREÇÃO DO BUG DA PRIMEIRA VEZ
   const createRoom = useCallback(async (playerName: string) => {
     setLoading(true);
     try {
       const roomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
       const firstColor = getRandomColor('normal');
       
+      // 1. Primeiro cria a sala
       const { data, error } = await supabase
         .from('game_rooms')
         .insert({
@@ -58,15 +59,47 @@ export const useMultiplayer = () => {
 
       if (error) throw error;
 
+      // 2. AGUARDAR 1 SEGUNDO - ESSA É A CHAVE PARA O BUG
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // 3. Buscar a sala NOVAMENTE para garantir sincronização
+      const { data: verifiedRoom, error: verifyError } = await supabase
+        .from('game_rooms')
+        .select('*')
+        .eq('id', data.id)
+        .single();
+
+      if (verifyError) {
+        // Se falhar, tentar mais uma vez
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const { data: retryRoom, error: retryError } = await supabase
+          .from('game_rooms')
+          .select('*')
+          .eq('id', data.id)
+          .single();
+        
+        if (retryError) throw retryError;
+        
+        setGameState(prev => ({
+          ...prev,
+          room: retryRoom as GameRoom,
+          playerName,
+          isPlayer1: true,
+          isMyTurn: false,
+        }));
+        
+        return retryRoom;
+      }
+
       setGameState(prev => ({
         ...prev,
-        room: data as GameRoom,
+        room: verifiedRoom as GameRoom,
         playerName,
         isPlayer1: true,
         isMyTurn: false,
       }));
 
-      return data;
+      return verifiedRoom;
     } catch (error) {
       console.error('Erro ao criar sala:', error);
       throw error;
@@ -75,10 +108,35 @@ export const useMultiplayer = () => {
     }
   }, []);
 
-  // Entrar em sala
+  // Entrar em sala - CORREÇÃO DO BUG DA PRIMEIRA VEZ
   const joinRoom = useCallback(async (roomId: string, playerName: string) => {
     setLoading(true);
     try {
+      // 1. Verificar SE a sala existe (com retry)
+      let existingRoom = null;
+      let retryCount = 0;
+      
+      while (retryCount < 3 && !existingRoom) {
+        const { data, error } = await supabase
+          .from('game_rooms')
+          .select('*')
+          .eq('id', roomId)
+          .eq('status', 'esperando')
+          .single();
+        
+        if (error) {
+          retryCount++;
+          await new Promise(resolve => setTimeout(resolve, 500));
+        } else {
+          existingRoom = data;
+        }
+      }
+      
+      if (!existingRoom) {
+        throw new Error('Sala não encontrada ou já em jogo');
+      }
+
+      // 2. Entrar na sala
       const { data, error } = await supabase
         .from('game_rooms')
         .update({ 
@@ -88,10 +146,14 @@ export const useMultiplayer = () => {
           level: 1,
         })
         .eq('id', roomId)
+        .eq('status', 'esperando') // IMPORTANTE: Só atualiza se ainda estiver esperando
         .select()
         .single();
 
       if (error) throw error;
+
+      // 3. Aguardar sincronização
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       setGameState(prev => ({
         ...prev,
@@ -132,34 +194,6 @@ export const useMultiplayer = () => {
     }
   }, [gameState.room, gameState.isMyTurn, gameState.isPlayer1]);
 
-  // Finalizar jogo
-  const endGame = useCallback(async (winner: string) => {
-    if (!gameState.room) return;
-
-    try {
-      // Marcar como finalizado e definir o vencedor para que ambos vejam
-      const { error } = await supabase
-        .from('game_rooms')
-        .update({
-          status: 'finalizado',
-          turn: winner === gameState.playerName ? 
-            (gameState.isPlayer1 ? 'player1' : 'player2') : 
-            (gameState.isPlayer1 ? 'player2' : 'player1')
-        })
-        .eq('id', gameState.room.id);
-
-      if (error) throw error;
-
-      setGameState(prev => ({
-        ...prev,
-        gameOver: true,
-        winner,
-      }));
-    } catch (error) {
-      console.error('Erro ao finalizar jogo:', error);
-    }
-  }, [gameState.room, gameState.playerName, gameState.isPlayer1]);
-
   // Adicionar nova cor à sequência
   const addToSequence = useCallback(async () => {
     if (!gameState.room || !gameState.isMyTurn) return;
@@ -185,55 +219,99 @@ export const useMultiplayer = () => {
     }
   }, [gameState.room, gameState.isMyTurn, gameState.isPlayer1]);
 
-  // Configurar Realtime
-  useEffect(() => {
+  // Finalizar jogo
+  const endGame = useCallback(async (winner: string) => {
     if (!gameState.room) return;
 
-    const channel = supabase
-      .channel(`room-${gameState.room.id}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'game_rooms',
-          filter: `id=eq.${gameState.room.id}`,
-        },
-        (payload) => {
-          const updatedRoom = payload.new as GameRoom;
-          
-          setGameState(prev => {
-            const isMyTurn = (updatedRoom.turn === 'player1' && prev.isPlayer1) || 
-                           (updatedRoom.turn === 'player2' && !prev.isPlayer1);
+    try {
+      const { error } = await supabase
+        .from('game_rooms')
+        .update({
+          status: 'finalizado',
+          turn: winner === gameState.playerName ? 
+            (gameState.isPlayer1 ? 'player1' : 'player2') : 
+            (gameState.isPlayer1 ? 'player2' : 'player1')
+        })
+        .eq('id', gameState.room.id);
+
+      if (error) throw error;
+
+      setGameState(prev => ({
+        ...prev,
+        gameOver: true,
+        winner,
+      }));
+    } catch (error) {
+      console.error('Erro ao finalizar jogo:', error);
+    }
+  }, [gameState.room, gameState.playerName, gameState.isPlayer1]);
+
+  // Configurar Realtime - COM RETRY PARA PRIMEIRA VEZ
+  useEffect(() => {
+    if (!gameState.room?.id) return;
+
+    let retryCount = 0;
+    const maxRetries = 2;
+
+    const setupSubscription = () => {
+      const channel = supabase
+        .channel(`room-${gameState.room!.id}`)
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'game_rooms',
+            filter: `id=eq.${gameState.room!.id}`,
+          },
+          (payload) => {
+            const updatedRoom = payload.new as GameRoom;
             
-            const sequence = JSON.parse(updatedRoom.sequence || '[]');
-            
-            // Se o jogo foi finalizado, determinar o vencedor
-            let winner = prev.winner;
-            if (updatedRoom.status === 'finalizado' && !prev.gameOver) {
-              // O vencedor é determinado pelo turn quando finalizado
-              if (updatedRoom.turn === 'player1') {
-                winner = updatedRoom.player1;
-              } else {
-                winner = updatedRoom.player2;
+            setGameState(prev => {
+              const isMyTurn = (updatedRoom.turn === 'player1' && prev.isPlayer1) || 
+                             (updatedRoom.turn === 'player2' && !prev.isPlayer1);
+              
+              const sequence = JSON.parse(updatedRoom.sequence || '[]');
+              
+              let winner = prev.winner;
+              if (updatedRoom.status === 'finalizado' && !prev.gameOver) {
+                if (updatedRoom.turn === 'player1') {
+                  winner = updatedRoom.player1;
+                } else {
+                  winner = updatedRoom.player2;
+                }
               }
-            }
-            
-            return {
-              ...prev,
-              room: updatedRoom,
-              isMyTurn,
-              gameSequence: sequence,
-              gameOver: updatedRoom.status === 'finalizado',
-              winner,
-            };
-          });
-        }
-      )
-      .subscribe();
+              
+              return {
+                ...prev,
+                room: updatedRoom,
+                isMyTurn,
+                gameSequence: sequence,
+                gameOver: updatedRoom.status === 'finalizado',
+                winner,
+              };
+            });
+          }
+        )
+        .subscribe((status) => {
+          if (status === 'SUBSCRIBED') {
+            console.log('✅ Conexão Realtime estabelecida');
+          } else if (status === 'CHANNEL_ERROR' && retryCount < maxRetries) {
+            retryCount++;
+            console.log(`🔄 Tentando reconectar... (${retryCount}/${maxRetries})`);
+            setTimeout(setupSubscription, 1000);
+          }
+        });
+
+      return channel;
+    };
+
+    const channel = setupSubscription();
 
     return () => {
-      supabase.removeChannel(channel);
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
     };
   }, [gameState.room?.id]);
 
