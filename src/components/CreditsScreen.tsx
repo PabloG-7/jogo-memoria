@@ -18,7 +18,7 @@ const CreditsScreen: React.FC<CreditsScreenProps> = ({ onBack }) => {
     {
       name: 'Instagram',
       username: 'pablogomesss__',
-      url: 'https://www.instagram.com/pablogomesss__/',
+      url: 'https://www.instagram.com/pablog.dev/',
       icon: <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />,
       color: 'from-pink-700 to-purple-900 hover:from-pink-300 hover:to-purple-600'
     },
